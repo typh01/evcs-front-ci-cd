@@ -180,15 +180,12 @@ function App() {
           <Route path="/admin" element={<AdminRoute />}>
             <Route element={<AdminLayout />}>
               <Route path="main" element={<AdminMain />} />
-
               {/* 회원 관리 */}
               <Route path="memberManagement" element={<MemberManagement />} />
-
-              {/* 렌트카 관련 */}
+              {/* 렌트카 관련 */}{" "}
               <Route path="insertCar" element={<InsertCar />}></Route>
               <Route path="carManagement" element={<CarManagement />}></Route>
               <Route path="carDetails" element={<CarDetails />}></Route>
-
               <Route path="insertRentCar" element={<InsertRentCar />} />
               <Route path="rentCarManagement" element={<RentCarManagement />} />
               <Route path="rentCarDetails" element={<RentCarDetails />} />
@@ -209,12 +206,10 @@ function App() {
                 path="/admin/goGarageUpdateForm"
                 element={<GarageUpdateForm />}
               />
-
               {/* 게시판 페이지 관련 */}
               <Route path="/admin/notice" element={<Notice />} />
               <Route path="/admin/notice/:id" element={<NoticeDetail />} />
               <Route path="/admin/notice/write" element={<NoticeWrite />} />
-
               <Route path="adminEventBoard" element={<AdminEventBoard />} />
               <Route
                 path="goAdminEventDetailPage"
@@ -233,7 +228,6 @@ function App() {
                 path="goHotdealEnrollForm"
                 element={<AdminHotDealRentCarEnrollForm />}
               />
-
               {/* 신고 관련*/}
               <Route
                 path="/admin/adminReport/*"
@@ -251,7 +245,6 @@ function App() {
                 path="/admin/adminReportsCom/:rpNo"
                 element={<AdminReportComDetail useDummyData={true} />}
               />
-
               {/* 뉴스 관련 */}
               <Route path="/admin/adminNews" element={<AdminNews />} />
             </Route>
