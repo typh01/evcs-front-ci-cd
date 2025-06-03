@@ -1,0 +1,40 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+node_modules/.vite
+
+# Build output
+dist/
+dist-ssr/
+.vite/
+
+# Environment files
+.env
+.env.*.local
+*.local
+conf.js
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+.metadata/
+
+# Docs
+README.md
