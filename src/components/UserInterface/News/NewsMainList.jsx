@@ -91,6 +91,7 @@ const NewsMainList = ({
       })
       .catch((err) => {
         console.error("뉴스 가져오기 실패:", err);
+        setListNews([]);
       })
       .finally(() => setLoading(false));
   }, [query]);
