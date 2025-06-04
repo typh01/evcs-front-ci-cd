@@ -29,7 +29,7 @@ const NewsList = ({
   const fetchNews = (targetPage, targetQuery = query, targetSort = sort) => {
     setLoading(true);
     axios
-      .get(`${backendUrl}/api/naver-news-list`, {
+      .get(`${backendUrl}/naver-news-list`, {
         params: {
           query: targetQuery,
           sort: targetSort,
@@ -56,7 +56,7 @@ const NewsList = ({
 
   useEffect(() => {
     axios
-      .get(`${backendUrl}/api/news/categories`)
+      .get(`${backendUrl}/news/categories`)
       .then((res) => {
         const list = res.data
           .map((item) => item.newsCategory)

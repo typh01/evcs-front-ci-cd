@@ -4,7 +4,6 @@ import {
   Col,
   Card,
   Table,
-  Form,
   Button,
   Pagination,
   Modal,
@@ -28,6 +27,7 @@ const MyReservationList = () => {
     maxPage: 1,
     count: 0,
   });
+  const apiUrl = window.ENV?.API_URL || "http://localhost:2580";
 
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -36,7 +36,7 @@ const MyReservationList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost/api/orders", {
+      .get(`${apiUrl}/orders`, {
         params: { page, memberNo: localStorage.getItem("memberNo") },
       })
       .then((res) => {
@@ -55,7 +55,7 @@ const MyReservationList = () => {
     setPayment(null);
 
     axios
-      .get(`http://localhost/api/payments/${paymentId}`)
+      .get(`${apiUrl}/payments/${paymentId}`)
       .then((res) => setPayment(res.data))
       .catch((e) => {
         console.error(e);

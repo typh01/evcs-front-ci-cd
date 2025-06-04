@@ -56,7 +56,7 @@ export function PaymentButton({
     try {
       // ✅ 버튼 누를 때만 createOrder 실행
       const response = await axios.post(
-        `${ENV_URL}/api/orders`,
+        `${ENV_URL}/orders`,
         {
           memberNo,
           rentCarNo,

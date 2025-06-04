@@ -42,14 +42,14 @@ const NewsAdminPage = () => {
 
   const fetchCategories = () => {
     axios
-      .get(`${backendUrl}/api/admin/news/category/all`, authHeader)
+      .get(`${backendUrl}/admin/news/category/all`, authHeader)
       .then((res) => setCategories(res.data))
       .catch((err) => console.error("카테고리 목록 불러오기 실패", err));
   };
 
   const fetchNews = () => {
     axios
-      .get(`${backendUrl}/api/admin/news/list`, authHeader)
+      .get(`${backendUrl}/admin/news/list`, authHeader)
       .then((res) => setNewsList(res.data || []))
       .catch((err) => console.error("뉴스 목록 불러오기 실패", err));
   };
@@ -97,7 +97,7 @@ const NewsAdminPage = () => {
     if (!newCategory.trim()) return;
     axios
       .post(
-        `${backendUrl}/api/admin/news/category`,
+        `${backendUrl}/admin/news/category`,
         { newsCategory: newCategory },
         authHeader
       )
@@ -112,7 +112,7 @@ const NewsAdminPage = () => {
     if (!editingCategoryName.trim()) return;
     axios
       .put(
-        `${backendUrl}/api/admin/news/category/${newsCategoryNo}`,
+        `${backendUrl}/admin/news/category/${newsCategoryNo}`,
         { newsCategory: editingCategoryName },
         authHeader
       )
@@ -126,10 +126,7 @@ const NewsAdminPage = () => {
 
   const handleDeleteCategory = (newsCategoryNo) => {
     axios
-      .delete(
-        `${backendUrl}/api/admin/news/category/${newsCategoryNo}`,
-        authHeader
-      )
+      .delete(`${backendUrl}/admin/news/category/${newsCategoryNo}`, authHeader)
       .then(() => fetchCategories())
       .catch((err) => console.error("카테고리 삭제 실패", err));
   };
@@ -145,7 +142,7 @@ const NewsAdminPage = () => {
   const toggleStatus = (newsNo, currentStatus) => {
     const newStatus = currentStatus === "Y" ? "N" : "Y";
     axios
-      .put(`${backendUrl}/api/admin/news/status`, null, {
+      .put(`${backendUrl}/admin/news/status`, null, {
         params: { newsNo, status: newStatus },
         ...authHeader,
       })

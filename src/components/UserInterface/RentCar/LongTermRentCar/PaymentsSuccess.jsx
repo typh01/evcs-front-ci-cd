@@ -20,7 +20,7 @@ const PaymentsSuccess = () => {
     const confirmPayment = async () => {
       try {
         await axios.post(
-          `${ENV_URL}/api/payments/confirm`,
+          `${ENV_URL}/payments/confirm`,
           { paymentKey, orderId, amount },
           {
             headers: {
@@ -31,7 +31,7 @@ const PaymentsSuccess = () => {
         setLoading(false);
       } catch (err) {
         await axios.post(
-          `${ENV_URL}/api/payments/fail`,
+          `${ENV_URL}/payments/fail`,
           {
             paymentKey,
             orderId,

@@ -29,7 +29,7 @@ const MyNews = () => {
     if (!token) return;
 
     axios
-      .get(`${backendUrl}/api/news/mypage/${activeTab}`, authHeader)
+      .get(`${backendUrl}/news/mypage/${activeTab}`, authHeader)
       .then((res) => {
         setFullList(res.data || []);
         const updatedImages = {};
@@ -51,7 +51,7 @@ const MyNews = () => {
 
     if (imageUrl === "/images/loading.png") {
       axios
-        .get(`${backendUrl}/api/naver-image`, { params: { query: key } })
+        .get(`${backendUrl}/naver-image`, { params: { query: key } })
         .then((res) => {
           const hits = res.data.items || [];
           const fetched =

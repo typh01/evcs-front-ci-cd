@@ -41,7 +41,7 @@ const NewsMainList = ({
     if (imageUrl === placeholder) {
       const kws = extractKeywords(key);
       axios
-        .get(`${backendUrl}/api/naver-image`, { params: { query: kws } })
+        .get(`${backendUrl}/naver-image`, { params: { query: kws } })
         .then((res) => {
           const hits = res.data.items || [];
           const fetched = hits[0]?.thumbnail || hits[0]?.link || placeholder;
@@ -79,7 +79,7 @@ const NewsMainList = ({
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${backendUrl}/api/naver-news`, {
+      .get(`${backendUrl}/naver-news`, {
         params: { query, display: 20, start: 1 },
       })
       .then((res) => {

@@ -25,7 +25,7 @@ const CommentSection = ({ newsNo, backendUrl }) => {
 
   const fetchComments = () => {
     axios
-      .get(`${backendUrl}/api/news/comment/list`, {
+      .get(`${backendUrl}/news/comment/list`, {
         params: { newsNo },
         ...authHeader,
       })
@@ -38,7 +38,7 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!newComment.trim()) return;
     axios
       .post(
-        `${backendUrl}/api/news/comment`,
+        `${backendUrl}/news/comment`,
         { newsNo, content: newComment },
         authHeader
       )
@@ -54,7 +54,7 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!replyContent.trim()) return;
     axios
       .post(
-        `${backendUrl}/api/news/comment`,
+        `${backendUrl}/news/comment`,
         { newsNo, content: replyContent, parentId },
         authHeader
       )
@@ -72,18 +72,18 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!current) return;
 
     const deleteHateIfExist = current.hasHated
-      ? axios.delete(`${backendUrl}/api/news/comment/hate`, {
+      ? axios.delete(`${backendUrl}/news/comment/hate`, {
           params: { newsCmtId: commentId },
           ...authHeader,
         })
       : Promise.resolve();
 
     const likeAction = current.hasLiked
-      ? axios.delete(`${backendUrl}/api/news/comment/like`, {
+      ? axios.delete(`${backendUrl}/news/comment/like`, {
           params: { newsCmtId: commentId },
           ...authHeader,
         })
-      : axios.post(`${backendUrl}/api/news/comment/like`, null, {
+      : axios.post(`${backendUrl}/news/comment/like`, null, {
           params: { newsCmtId: commentId },
           ...authHeader,
         });
@@ -100,18 +100,18 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!current) return;
 
     const deleteLikeIfExist = current.hasLiked
-      ? axios.delete(`${backendUrl}/api/news/comment/like`, {
+      ? axios.delete(`${backendUrl}/news/comment/like`, {
           params: { newsCmtId: commentId },
           ...authHeader,
         })
       : Promise.resolve();
 
     const hateAction = current.hasHated
-      ? axios.delete(`${backendUrl}/api/news/comment/hate`, {
+      ? axios.delete(`${backendUrl}/news/comment/hate`, {
           params: { newsCmtId: commentId },
           ...authHeader,
         })
-      : axios.post(`${backendUrl}/api/news/comment/hate`, null, {
+      : axios.post(`${backendUrl}/news/comment/hate`, null, {
           params: { newsCmtId: commentId },
           ...authHeader,
         });
@@ -127,7 +127,7 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!editContent.trim()) return;
     axios
       .put(
-        `${backendUrl}/api/news/comment`,
+        `${backendUrl}/news/comment`,
         { commentId: editingCommentId, content: editContent },
         authHeader
       )
@@ -143,7 +143,7 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!token) return alert("로그인 후 이용해주세요.");
     if (!window.confirm("댓글을 삭제할까요?")) return;
     axios
-      .delete(`${backendUrl}/api/news/comment/${commentId}`, authHeader)
+      .delete(`${backendUrl}/news/comment/${commentId}`, authHeader)
       .then(fetchComments)
       .catch((error) => console.error("댓글 삭제 실패", error));
   };
@@ -153,7 +153,7 @@ const CommentSection = ({ newsNo, backendUrl }) => {
     if (!window.confirm("해당 댓글을 신고하시겠습니까?")) return;
     axios
       .post(
-        `${backendUrl}/api/report/comment`,
+        `${backendUrl}/report/comment`,
         { newsCmtId: commentId, reportReason: "부적절한 내용" },
         authHeader
       )
