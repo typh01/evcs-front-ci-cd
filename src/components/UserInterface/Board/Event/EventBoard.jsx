@@ -1,16 +1,7 @@
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Table,
-  Form,
-  Button,
-  Pagination,
-} from "react-bootstrap";
+import { Container, Row, Col, Card, Table, Pagination } from "react-bootstrap";
 
 import NoticeNav from "../../Common/Nav/NoticeNav";
-import { BoardContainerDiv, BoardBodyDiv } from "../Board.styles";
+import { BoardContainerDiv } from "../Board.styles";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -18,7 +9,8 @@ import axios from "axios";
 const EventBoard = () => {
   const ENV_URL = window.ENV?.API_URL || `http://localhost:2580`;
   const navigate = useNavigate();
-  const [events, setEvents] = useState([]);
+
+  const [events, setEvents] = useState([]); // 기본값을 빈 배열로
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState({
     startPage: 1,
@@ -30,15 +22,23 @@ const EventBoard = () => {
 
   useEffect(() => {
     axios
-      .get(`${ENV_URL}/user-events`, {
-        params: { page },
-      })
+      .get(`${ENV_URL}/user-events`, { params: { page } })
       .then((res) => {
-        console.log("effect data : ", res.data);
-        setEvents(res.data.eventList);
-        setPageInfo(res.data.pageInfo);
+        const eventList = res.data?.eventList ?? [];
+        const pageInfo = res.data?.pageInfo ?? {
+          startPage: 1,
+          endPage: 1,
+          currentPage: 1,
+          maxPage: 1,
+          count: 0,
+        };
+        setEvents(eventList);
+        setPageInfo(pageInfo);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("이벤트 목록 가져오기 실패:", err);
+        setEvents([]);
+      });
   }, [page]);
 
   const renderPagination = () => {
@@ -95,81 +95,79 @@ const EventBoard = () => {
   };
 
   return (
-    <>
-      <BoardContainerDiv style={{ height: "900px" }}>
-        <NoticeNav />
-        <div style={{ width: "100%" }}>
-          <div
-            className="page-wrapper d-flex flex-column "
-            style={{
-              paddingBottom: "60px",
-              minHeight: "70vh",
-            }}
-          >
-            <Container className="flex-grow-1">
-              <Row style={{ marginTop: "20px" }}>
-                <Col></Col>
-              </Row>
-              {/* 테이블 */}
-              <Row>
-                <Col>
-                  <Card>
-                    <Card.Header className="bg-primary text-white d-flex align-items-center">
-                      <span role="img" aria-label="icon">
-                        🎉
-                      </span>
-                      <span className="ms-2">이벤트 게시판</span>
-                    </Card.Header>
-                    <Card.Body className="p-0">
-                      <Table
-                        striped
-                        bordered
-                        hover
-                        className="text-center mb-0"
-                      >
-                        <thead>
+    <BoardContainerDiv style={{ height: "900px" }}>
+      <NoticeNav />
+      <div style={{ width: "100%" }}>
+        <div
+          className="page-wrapper d-flex flex-column"
+          style={{
+            paddingBottom: "60px",
+            minHeight: "70vh",
+          }}
+        >
+          <Container className="flex-grow-1">
+            <Row style={{ marginTop: "20px" }}>
+              <Col></Col>
+            </Row>
+            {/* 테이블 */}
+            <Row>
+              <Col>
+                <Card>
+                  <Card.Header className="bg-primary text-white d-flex align-items-center">
+                    <span role="img" aria-label="icon">
+                      🎉
+                    </span>
+                    <span className="ms-2">이벤트 게시판</span>
+                  </Card.Header>
+                  <Card.Body className="p-0">
+                    <Table striped bordered hover className="text-center mb-0">
+                      <thead>
+                        <tr>
+                          <th>번호</th>
+                          <th>제목</th>
+                          <th>작성자</th>
+                          <th>작성일자</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {Array.isArray(events) && events.length > 0 ? (
+                          events.map((event) => (
+                            <tr
+                              key={event.eventNo}
+                              onClick={() =>
+                                navigate("/goEventDetailPage", {
+                                  state: { event },
+                                })
+                              }
+                            >
+                              <td>{event.eventNo}</td>
+                              <td>{event.eventName}</td>
+                              <td>{event.memberNickname}</td>
+                              <td>{event.enrollDate}</td>
+                            </tr>
+                          ))
+                        ) : (
                           <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>작성일자</th>
+                            <td colSpan="4">등록된 이벤트가 없습니다.</td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {Array.isArray(events) &&
-                            events.map((event) => (
-                              <tr
-                                key={event.eventNo}
-                                onClick={() =>
-                                  navigate("/goEventDetailPage", {
-                                    state: { event },
-                                  })
-                                }
-                              >
-                                <td>{event.eventNo}</td>
-                                <td>{event.eventName}</td>
-                                <td>{event.memberNickname}</td>
-                                <td>{event.enrollDate}</td>
-                              </tr>
-                            ))}
-                        </tbody>
-                      </Table>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-            </Container>
+                        )}
+                      </tbody>
+                    </Table>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
 
-            {/* 항상 아래에 붙는 페이징 */}
-            <footer className="footer-pagination">
-              <Pagination className="justify-content-center mb-0">
-                {renderPagination()}
-              </Pagination>
-            </footer>
-          </div>
+          {/* 페이징 */}
+          <footer className="footer-pagination">
+            <Pagination className="justify-content-center mb-0">
+              {renderPagination()}
+            </Pagination>
+          </footer>
         </div>
-      </BoardContainerDiv>
-    </>
+      </div>
+    </BoardContainerDiv>
   );
 };
 
