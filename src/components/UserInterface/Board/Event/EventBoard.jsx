@@ -138,7 +138,7 @@ const EventBoard = () => {
                         <tbody>
                           {events.map((event) => (
                             <tr
-                              key={event.evnetNo}
+                              key={event.eventNo}
                               style={{ cursor: "pointer" }}
                               onClick={() =>
                                 navigate("/goEventDetailPage", {
