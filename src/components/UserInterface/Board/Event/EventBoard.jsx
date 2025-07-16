@@ -130,7 +130,6 @@ const EventBoard = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {/*
                         {Array.isArray(events) && events.length > 0 ? (
                           events.map((event) => (
                             <tr
@@ -152,7 +151,6 @@ const EventBoard = () => {
                             <td colSpan="4">등록된 이벤트가 없습니다.</td>
                           </tr>
                         )}
-                        */}
                       </tbody>
                     </Table>
                   </Card.Body>
